@@ -4,16 +4,28 @@
 
 ## O Que É
 
-Projeto de firmware em Rust `no_std` que lê um sensor (temperatura/luminosidade) e transmite via serial. Microcontrolador: ESP32 com `esp-hal`.
+Projeto de firmware em Rust `no_std` que lê um sensor de temperatura (LM35) e transmite via serial. Microcontrolador: ESP32 com `esp-hal`.
 
 **Por que Rust:** Segurança de memória sem garbage collector — essencial para dispositivos implantáveis.
 
-## Pré-requisitos
+## Hardware Necessário
 
-- P01 concluído (Arduino básico)
-- Rust instalado (rustup)
-- ESP32 ou Raspberry Pi Pico
-- Sensor LM35 (temperatura) ou LDR (luminosidade)
+| Item | Qtd | Onde Comprar |
+|------|-----|--------------|
+| ESP32 DevKit v1 | 1 | Mercado Livre (~R$35) |
+| LM35 (sensor temperatura) | 1 | Mercado Livre (~R$5) |
+| Protoboard | 1 | Mercado Livre (~R$15) |
+| Jumpers | 5 | Mercado Livre (~R$5) |
+
+**Total: ~R$55**
+
+## Circuito
+
+```
+LM35 VCC → 3.3V
+LM35 GND → GND
+LM35 OUT → GPIO 34 (ADC)
+```
 
 ## Setup
 
@@ -26,50 +38,36 @@ rustup target add xtensa-esp32-none-elf
 
 # Instalar espflash
 cargo install espflash
+
+# Compilar e flashar
+cargo run
 ```
 
-## Estrutura
+## Estrutura do Código
 
 ```
 src/
-├── main.rs          # Entry point
-├── sensor.rs        # Leitura do sensor
-├── serial.rs        # Comunicação serial
-└── error.rs         # Tratamento de erros
+├── main.rs      # Entry point principal
+├── sensor.rs    # Leitura de sensores
+├── serial.rs    # Comunicação serial
+└── error.rs     # Tratamento de erros
 ```
 
-## Etapas
+## Como Rodar
 
-### E1: Setup do Toolchain
-- Instalar Rust
-- Configurar target ESP32
-- Rodar "Hello World"
-
-### E2: Blink em Rust
-- Reimplementar P01-E2 em Rust
-- Entender no_std
-
-### E3: Leitura de Sensor
-- Conectar LM35 ou LDR
-- Ler valor via ADC
-- Transmitir via serial
-
-### E4: Tratamento de Erro
-- Implementar Result<T, E>
-- Tratar erros sem panic
-
-### E5: Documentação
-- README completo
-- Diagrama do circuito
-- Instruções de uso
+1. Conectar ESP32 via USB
+2. Rodar `cargo run`
+3. Abrir Serial Monitor (115200 baud)
+4. Ver dados de temperatura sendo enviados
 
 ## Status
 
-- [ ] E1: Setup do Toolchain
-- [ ] E2: Blink em Rust
-- [ ] E3: Leitura de Sensor
-- [ ] E4: Tratamento de Erro
-- [ ] E5: Documentação
+- [x] Estrutura do projeto
+- [x] Código principal
+- [x] Módulo de sensor
+- [x] Módulo serial
+- [x] Tratamento de erros
+- [ ] Teste em hardware real
 
 ## Tech Stack
 

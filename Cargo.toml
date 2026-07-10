@@ -1,0 +1,15 @@
+[package]
+name = "p02-rust-firmware"
+version = "0.1.0"
+edition = "2021"
+authors = ["Lowingx"]
+description = "Firmware embarcado em Rust: sensor → serial. Primeiro passo para BCI."
+license = "MIT"
+
+[dependencies]
+esp-hal = { version = "0.21", features = ["esp32"] }
+esp-println = { version = "0.12", features = ["esp32"] }
+
+[profile.release]
+opt-level = "s"
+lto = true
